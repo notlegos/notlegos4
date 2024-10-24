@@ -19,6 +19,14 @@ namespace notLegos {
     export function sayMotor(motor: motors, setting: motorState) {
         radioSay("M" + motor, setting)
     }
+
+    export enum side {left=0, right=1}
+    //% blockId=NL_Radio_SayIndicate
+    //% subcategory="Radio" Group="Radio"
+    //% block="say indicate %theSide color to %theColor"
+    export function sayIndicate(theSide: side, theColor: hues) {
+        radioSay("I" + theSide, theColor)
+    }
     
 /// END RADIO ///
 
@@ -198,6 +206,22 @@ namespace notLegos {
             }
         }
     }
+
+    //% blockId=NL_PIXEL_IndicateLColorShim
+    //% subcategory="Neopixel" Group="Neopixel"
+    //% block="Set numbered indicate left hue %theColor"
+    //% weight=100
+    export function setIndicateLShim(theColor: number) {
+        setIndicateL(theColor)
+    }
+    //% blockId=NL_PIXEL_IndicateRColorShim
+    //% subcategory="Neopixel" Group="Neopixel"
+    //% block="Set numbered indicate right hue %theColor"
+    //% weight=100
+    export function setIndicateRShim(theColor: number) {
+        setIndicateR(theColor)
+    }
+
     //% blockId=NL_PIXEL_IndicateLColor
     //% subcategory="Neopixel" Group="Neopixel"
     //% block="indicate left to %theColor"

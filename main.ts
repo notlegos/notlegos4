@@ -23,33 +23,40 @@ function runWelcome () {
     notLegos.sayLights(notLegos.vfxRegion.CastleAll, notLegos.vfxEffect.glow)
     basic.pause(2000)
     notLegos.sayLights(notLegos.vfxRegion.CastleAll, notLegos.vfxEffect.off)
-    basic.pause(10)
+    basic.pause(5)
     notLegos.sayLights(notLegos.vfxRegion.SpotH, notLegos.vfxEffect.active)
-    basic.pause(10)
+    basic.pause(5)
     notLegos.sayLights(notLegos.vfxRegion.SpotI, notLegos.vfxEffect.active)
-    pins.digitalWritePin(DigitalPin.P5, 1)
     basic.pause(3500)
     notLegos.mp3voicePlay(notLegos.voiceSaying.intro)
+    notLegos.sayIndicate(notLegos.side.left, notLegos.hues.yellow)
+    basic.pause(5)
+    notLegos.sayIndicate(notLegos.side.right, notLegos.hues.cyan)
+    basic.pause(5)
+    notLegos.sayLights(notLegos.vfxRegion.SpotH, notLegos.vfxEffect.off)
+    basic.pause(5)
+    notLegos.sayLights(notLegos.vfxRegion.SpotI, notLegos.vfxEffect.off)
+    fogHigh = false
+    fogBlow = false
+    pins.digitalWritePin(DigitalPin.P5, 1)
     basic.pause(3500)
     notLegos.sayLights(notLegos.vfxRegion.BrickDragon, notLegos.vfxEffect.indicateL)
     basic.pause(1400)
     notLegos.sayLights(notLegos.vfxRegion.SpotE, notLegos.vfxEffect.indicateR)
+    basic.pause(5)
     notLegos.sayLights(notLegos.vfxRegion.SpotC, notLegos.vfxEffect.indicateR)
-    fogHigh = false
-    fogBlow = false
+    basic.pause(5)
     notLegos.sayMotor(notLegos.motors.door, notLegos.motorState.max)
-    basic.pause(2500)
     notLegos.setVolume(notLegos.mp3type.music, 85)
-    notLegos.sayLights(notLegos.vfxRegion.SpotH, notLegos.vfxEffect.off)
-    basic.pause(10)
-    notLegos.sayLights(notLegos.vfxRegion.SpotI, notLegos.vfxEffect.off)
-    basic.pause(10)
+    basic.pause(2500)
     notLegos.mp3musicPlay(notLegos.musicGenre.awaiting)
     notLegos.sayLights(notLegos.vfxRegion.Swing, notLegos.vfxEffect.idle)
-    basic.pause(1000)
-    notLegos.sayLights(notLegos.vfxRegion.KongFront, notLegos.vfxEffect.idle)
-    basic.pause(1000)
+    basic.pause(5)
+    notLegos.sayLights(notLegos.vfxRegion.KongBack, notLegos.vfxEffect.idle)
+    basic.pause(5)
     notLegos.sayLights(notLegos.vfxRegion.WheelOuter, notLegos.vfxEffect.idle)
+    basic.pause(5)
+    notLegos.sayLights(notLegos.vfxRegion.Sock, notLegos.vfxEffect.idle)
 }
 function buttonPress (button: string) {
     notLegos.printLine("button: " + button, 6)
@@ -139,9 +146,18 @@ radio.onReceivedValue(function (name, value) {
                 notLegos.setEffectShim(lightRef, value)
             } else if (theName.charAt(0) == "M") {
                 motorRef = parseFloat(theName.substr(1, theName.length - 1))
-                notLegos.printLine("motor: " + lightRef, 5)
+                notLegos.printLine("motor: " + motorRef, 5)
                 notLegos.motorSetShim(motorRef, value)
+            } else if (theName.charAt(0) == "I") {
+                sideRef = parseFloat(theName.substr(1, theName.length - 1))
+                if (sideRef == 0) {
+                    notLegos.setIndicateLShim(value)
+                } else {
+                    notLegos.setIndicateRShim(value)
+                }
             } else if (theName == "welco") {
+            	
+            } else {
             	
             }
         }
@@ -173,6 +189,7 @@ function resetCastleDo () {
 let buttonRow = 0
 let iTook = 0
 let lastVolumeRead = 0
+let sideRef = 0
 let motorRef = 0
 let lightRef = 0
 let theName = ""
