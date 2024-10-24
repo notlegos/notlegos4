@@ -57,6 +57,7 @@ function runWelcome () {
     notLegos.sayLights(notLegos.vfxRegion.WheelOuter, notLegos.vfxEffect.idle)
     basic.pause(5)
     notLegos.sayLights(notLegos.vfxRegion.Sock, notLegos.vfxEffect.idle)
+    sayMode(true, true, true)
 }
 function buttonPress (button: string) {
     notLegos.printLine("button: " + button, 6)
@@ -110,9 +111,11 @@ function ready_oled () {
         notLegos.printLine(" V" + notLegos.mp3durationMusic(), 3)
         notLegos.printLine("Mode: " + castleMode, 4)
         notLegos.printLine("M:" + notLegos.mp3durationMusic(), 5)
+        notLegos.printLine("ML" + monitorLeft + "MC" + monitorCenter + "MR" + monitorRight, 6)
     } else {
         notLegos.printLine("M: " + castleMode + "" + "", 1)
         notLegos.printLine("R" + Math.constrain(lastLaserR, 0, 9) + " C" + Math.constrain(lastLaserC, 0, 9) + " L" + Math.constrain(lastLaserL, 0, 9), 2)
+        notLegos.printLine("ML" + monitorLeft + "MC" + monitorCenter + "MR" + monitorRight, 6)
     }
 }
 radio.onReceivedValue(function (name, value) {
@@ -131,8 +134,14 @@ radio.onReceivedValue(function (name, value) {
                     basic.pause(100)
                 }
                 runWelcome()
-            } else if (theName == "welco") {
-            	
+            } else if (theName == "BREAK") {
+                if (value == 1) {
+                    monitorLeft = true
+                } else if (value == 2) {
+                    monitorCenter = true
+                } else if (value == 3) {
+                    monitorRight = true
+                }
             } else if (theName == "check") {
             	
             }
@@ -155,9 +164,24 @@ radio.onReceivedValue(function (name, value) {
                 } else {
                     notLegos.setIndicateRShim(value)
                 }
+            } else if (theName.charAt(0) == "D") {
+                laserRef = theName.substr(1, theName.length - 1)
+                if (laserRef.includes("l")) {
+                    monitorLeft = true
+                } else {
+                    monitorLeft = false
+                }
+                if (laserRef.includes("c")) {
+                    monitorCenter = true
+                } else {
+                    monitorCenter = false
+                }
+                if (laserRef.includes("r")) {
+                    monitorRight = true
+                } else {
+                    monitorRight = false
+                }
             } else if (theName == "welco") {
-            	
-            } else {
             	
             }
         }
@@ -189,10 +213,14 @@ function resetCastleDo () {
 let buttonRow = 0
 let iTook = 0
 let lastVolumeRead = 0
+let laserRef = ""
 let sideRef = 0
 let motorRef = 0
 let lightRef = 0
 let theName = ""
+let monitorRight = false
+let monitorCenter = false
+let monitorLeft = false
 let lastWater = 0
 let laserMode = ""
 let btToken = ""
@@ -305,6 +333,13 @@ loops.everyInterval(40, function () {
         lastLaserC = pins.analogReadPin(AnalogReadWritePin.P2)
         lastLaserL = pins.analogReadPin(AnalogReadWritePin.P0)
         lastLaserR = pins.analogReadPin(AnalogReadWritePin.P1)
+        if (monitorLeft && lastLaserL == 0) {
+            radioSay("BREAK", 1)
+        } else if (monitorCenter && lastLaserC == 0) {
+            radioSay("BREAK", 2)
+        } else if (monitorRight && lastLaserR == 0) {
+            radioSay("BREAK", 3)
+        }
     }
     ready_oled()
     notLegos.changeThree()
