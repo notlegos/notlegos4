@@ -57,6 +57,7 @@ function runWelcome () {
     notLegos.sayLights(notLegos.vfxRegion.WheelOuter, notLegos.vfxEffect.idle)
     basic.pause(5)
     notLegos.sayLights(notLegos.vfxRegion.Sock, notLegos.vfxEffect.idle)
+    basic.pause(2000)
     sayMode(true, true, true)
 }
 function buttonPress (button: string) {
@@ -123,6 +124,9 @@ radio.onReceivedValue(function (name, value) {
         theName = name.substr(btToken.length, name.length - btToken.length)
         if (isCastleSay) {
             if (theName == "READY") {
+                monitorLeft = false
+                monitorCenter = false
+                monitorRight = false
                 castleMode = "ready"
                 notLegos.setVolume(notLegos.mp3type.music, 60)
                 basic.pause(500)
@@ -209,6 +213,9 @@ function resetCastleDo () {
     notLegos.motorSet(notLegos.motors.door, notLegos.motorState.min)
     notLegos.motorSet(notLegos.motors.dragon, notLegos.motorState.min)
     notLegos.motorSet(notLegos.motors.redrack, notLegos.motorState.min)
+    monitorLeft = false
+    monitorCenter = false
+    monitorRight = false
 }
 let buttonRow = 0
 let iTook = 0
