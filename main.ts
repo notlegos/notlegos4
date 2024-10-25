@@ -25,16 +25,12 @@ function runWelcome () {
     notLegos.sayLights(notLegos.vfxRegion.CastleAll, notLegos.vfxEffect.off)
     basic.pause(5)
     notLegos.sayLights(notLegos.vfxRegion.SpotH, notLegos.vfxEffect.active)
-    basic.pause(5)
     notLegos.sayLights(notLegos.vfxRegion.SpotI, notLegos.vfxEffect.active)
     basic.pause(3500)
     notLegos.mp3voicePlay(notLegos.voiceSaying.intro)
     notLegos.sayIndicate(notLegos.side.left, notLegos.hues.yellow)
-    basic.pause(5)
     notLegos.sayIndicate(notLegos.side.right, notLegos.hues.cyan)
-    basic.pause(5)
     notLegos.sayLights(notLegos.vfxRegion.SpotH, notLegos.vfxEffect.off)
-    basic.pause(5)
     notLegos.sayLights(notLegos.vfxRegion.SpotI, notLegos.vfxEffect.off)
     fogHigh = false
     fogBlow = false
@@ -43,22 +39,20 @@ function runWelcome () {
     notLegos.sayLights(notLegos.vfxRegion.BrickDragon, notLegos.vfxEffect.indicateL)
     basic.pause(1400)
     notLegos.sayLights(notLegos.vfxRegion.SpotE, notLegos.vfxEffect.indicateR)
-    basic.pause(5)
     notLegos.sayLights(notLegos.vfxRegion.SpotC, notLegos.vfxEffect.indicateR)
-    basic.pause(5)
     notLegos.sayMotor(notLegos.motors.door, notLegos.motorState.max)
     notLegos.setVolume(notLegos.mp3type.music, 85)
     basic.pause(2500)
-    notLegos.mp3musicPlay(notLegos.musicGenre.awaiting)
-    notLegos.sayLights(notLegos.vfxRegion.Swing, notLegos.vfxEffect.idle)
-    basic.pause(5)
     notLegos.sayLights(notLegos.vfxRegion.KongBack, notLegos.vfxEffect.idle)
-    basic.pause(5)
-    notLegos.sayLights(notLegos.vfxRegion.WheelOuter, notLegos.vfxEffect.idle)
-    basic.pause(5)
+    basic.pause(500)
     notLegos.sayLights(notLegos.vfxRegion.Sock, notLegos.vfxEffect.idle)
-    basic.pause(2000)
-    sayMode(true, true, true)
+    basic.pause(500)
+    notLegos.sayLights(notLegos.vfxRegion.Swing, notLegos.vfxEffect.idle)
+    basic.pause(500)
+    notLegos.sayLights(notLegos.vfxRegion.WheelOuter, notLegos.vfxEffect.idle)
+    basic.pause(500)
+    notLegos.mp3musicPlay(notLegos.musicGenre.awaiting)
+    castleMode = "awaiting"
 }
 function buttonPress (button: string) {
     notLegos.printLine("button: " + button, 6)
@@ -68,25 +62,42 @@ function setRadio (key: string, channel: number) {
     radio.setGroup(channel)
 }
 function runTutorial () {
-    radioSay("tutor", 1)
-    notLegos.setVolume(notLegos.mp3type.music, 80)
+    pins.digitalWritePin(DigitalPin.P5, 0)
+    fogLow = true
+    notLegos.sayLights(notLegos.vfxRegion.CastleAll, notLegos.vfxEffect.off)
+    basic.pause(5)
+    notLegos.setVolume(notLegos.mp3type.music, 70)
+    notLegos.sayLights(notLegos.vfxRegion.WheelOuter, notLegos.vfxEffect.active)
+    notLegos.sayIndicate(notLegos.side.left, notLegos.hues.cyan)
     basic.pause(20)
     notLegos.mp3musicPlay(notLegos.musicGenre.tutorial)
-    fogLevel = 3
     notLegos.mp3voicePlay(notLegos.voiceSaying.howto1)
-    basic.pause(5950)
+    basic.pause(3700)
+    notLegos.sayLights(notLegos.vfxRegion.SpotA, notLegos.vfxEffect.indicateL)
+    basic.pause(2450)
     notLegos.mp3voicePlay(notLegos.voiceSaying.howto2)
-    basic.pause(5000)
+    basic.pause(700)
+    notLegos.sayLights(notLegos.vfxRegion.SpotA, notLegos.vfxEffect.active)
+    notLegos.sayIndicate(notLegos.side.left, notLegos.hues.orange)
+    notLegos.sayIndicate(notLegos.side.right, notLegos.hues.lime)
+    basic.pause(1500)
+    notLegos.sayLights(notLegos.vfxRegion.SpotB, notLegos.vfxEffect.indicateL)
+    notLegos.sayLights(notLegos.vfxRegion.SpotC, notLegos.vfxEffect.indicateR)
+    basic.pause(2300)
+    pins.digitalWritePin(DigitalPin.P5, 1)
+    basic.pause(800)
     notLegos.mp3voicePlay(notLegos.voiceSaying.howto3)
     basic.pause(7600)
     notLegos.mp3voicePlay(notLegos.voiceSaying.howto4)
-    basic.pause(6100)
+    basic.pause(6300)
     notLegos.mp3voicePlay(notLegos.voiceSaying.howto5)
-    basic.pause(13000)
+    basic.pause(13200)
     notLegos.mp3voicePlay(notLegos.voiceSaying.howto6)
-    notLegos.setVolume(notLegos.mp3type.music, 100)
     basic.pause(7000)
+    notLegos.setVolume(notLegos.mp3type.music, 80)
+    basic.pause(20)
     notLegos.mp3musicPlay(notLegos.musicGenre.awaiting)
+    castleMode = "awaiting"
 }
 function sayReset () {
     radioSay("RESET", 1)
@@ -137,7 +148,14 @@ radio.onReceivedValue(function (name, value) {
                 while (lastHunt == 0) {
                     basic.pause(100)
                 }
-                runWelcome()
+                for (let index = 0; index < 1; index++) {
+                    runWelcome()
+                }
+                for (let index = 0; index < 0; index++) {
+                    runWelcome()
+                    runTutorial()
+                }
+                castleMode = "awaiting"
             } else if (theName == "BREAK") {
                 if (value == 1) {
                     monitorLeft = true
@@ -234,7 +252,6 @@ let btToken = ""
 let castleMode = ""
 let digits: notLegos.TM1637LEDs = null
 let isCastleSay = false
-let fogLevel = 0
 let fogBlow = false
 let fogHigh = false
 let fogLow = false
@@ -257,7 +274,7 @@ fogToggle = false
 fogLow = false
 fogHigh = false
 fogBlow = false
-fogLevel = 0
+let fogLevel = 0
 pins.setAudioPinEnabled(false)
 led.enable(false)
 setRadio("KC", 171)
@@ -316,6 +333,28 @@ loops.everyInterval(500, function () {
         notLegos.printLine("//Castle Do// " + iTook, 0)
     }
 })
+loops.everyInterval(500, function () {
+    if (castleMode == "goplay") {
+        castleMode = "play"
+        for (let index = 0; index < 0; index++) {
+            runWelcome()
+        }
+        notLegos.mp3sfxPlay(notLegos.sfxType.slash)
+        notLegos.sayMotor(notLegos.motors.shell, notLegos.motorState.max)
+        notLegos.sayLights(notLegos.vfxRegion.SpotF, notLegos.vfxEffect.mine)
+        notLegos.sayLights(notLegos.vfxRegion.BrickShell, notLegos.vfxEffect.mine)
+        basic.pause(notLegos.mp3durationSfxVoice() * 1000)
+        notLegos.mp3sayPlay(notLegos.playerSaying.ouch)
+        basic.pause(1500)
+        notLegos.sayMotor(notLegos.motors.shell, notLegos.motorState.min)
+        notLegos.sayLights(notLegos.vfxRegion.SpotAll, notLegos.vfxEffect.off)
+        notLegos.sayLights(notLegos.vfxRegion.BrickShell, notLegos.vfxEffect.off)
+        castleMode = "awaiting"
+    } else if (castleMode == "gotutorial") {
+        castleMode = "tutorial"
+        runTutorial()
+    }
+})
 loops.everyInterval(40, function () {
     iBegan = input.runningTime()
     if (isCastleSay) {
@@ -332,9 +371,14 @@ loops.everyInterval(40, function () {
             buttonPress("e")
         }
         lastHunt = pins.digitalReadPin(DigitalPin.P3)
-        lastSonarRead = notLegos.SonarNextRead()
         lastHue = Connected.readColor()
         lastGesture = Connected.getGesture()
+        if (castleMode == "awaiting" && lastHue > 205) {
+            castleMode = "goplay"
+        } else if (castleMode == "awaiting" && lastGesture != 0) {
+            castleMode = "gotutorial"
+        }
+        lastSonarRead = notLegos.SonarNextRead()
     } else {
         notLegos.castleSayTick()
         lastLaserC = pins.analogReadPin(AnalogReadWritePin.P2)
@@ -342,10 +386,19 @@ loops.everyInterval(40, function () {
         lastLaserR = pins.analogReadPin(AnalogReadWritePin.P1)
         if (monitorLeft && lastLaserL == 0) {
             radioSay("BREAK", 1)
+            monitorLeft = false
+            monitorCenter = false
+            monitorRight = false
         } else if (monitorCenter && lastLaserC == 0) {
             radioSay("BREAK", 2)
+            monitorLeft = false
+            monitorCenter = false
+            monitorRight = false
         } else if (monitorRight && lastLaserR == 0) {
             radioSay("BREAK", 3)
+            monitorLeft = false
+            monitorCenter = false
+            monitorRight = false
         }
     }
     ready_oled()
