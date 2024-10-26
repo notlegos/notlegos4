@@ -11,6 +11,7 @@ namespace notLegos {
     //% block="say lights %light show %effect"
     export function sayLights(light: vfxRegion, effect: vfxEffect) {
         radioSay("L" + light, effect)
+        basic.pause(5)
     }
 
     //% blockId=NL_Radio_SayMotor
@@ -18,6 +19,7 @@ namespace notLegos {
     //% block="say motor %motor set %setting"
     export function sayMotor(motor: motors, setting: motorState) {
         radioSay("M" + motor, setting)
+        basic.pause(5)
     }
 
     export enum side {left=0, right=1}
