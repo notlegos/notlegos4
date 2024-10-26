@@ -4,6 +4,7 @@ function stepOnD () {
     notLegos.sayIndicate(notLegos.side.right, notLegos.hues.cyan)
     notLegos.sayLights(notLegos.vfxRegion.SpotF, notLegos.vfxEffect.indicateL)
     notLegos.sayLights(notLegos.vfxRegion.SpotE, notLegos.vfxEffect.indicateR)
+    basic.pause(600)
     castleMode = "monitoring"
     while (!(monitorCenter || monitorRight)) {
         sayMode(false, true, true)
@@ -35,6 +36,7 @@ function stepOnA () {
     notLegos.sayLights(notLegos.vfxRegion.SpotA, notLegos.vfxEffect.active)
     notLegos.sayLights(notLegos.vfxRegion.SpotB, notLegos.vfxEffect.indicateL)
     notLegos.sayLights(notLegos.vfxRegion.SpotC, notLegos.vfxEffect.indicateR)
+    basic.pause(1000)
     castleMode = "monitoring"
     while (!(monitorLeft || monitorRight)) {
         sayMode(true, false, true)
@@ -56,6 +58,7 @@ function stepOnB () {
     notLegos.sayLights(notLegos.vfxRegion.SpotB, notLegos.vfxEffect.active)
     notLegos.sayIndicate(notLegos.side.left, notLegos.hues.orange)
     notLegos.sayLights(notLegos.vfxRegion.SpotD, notLegos.vfxEffect.indicateL)
+    basic.pause(600)
     castleMode = "monitoring"
     while (!(monitorRight)) {
         sayMode(false, false, true)
@@ -169,22 +172,17 @@ function runTutorial () {
     castleMode = "awaiting"
 }
 function stepOnI () {
-    basic.pause(5)
     notLegos.sayLights(notLegos.vfxRegion.SpotI, notLegos.vfxEffect.active)
-    basic.pause(5)
     notLegos.sayIndicate(notLegos.side.left, notLegos.hues.cyan)
-    basic.pause(5)
     notLegos.sayLights(notLegos.vfxRegion.SpotH, notLegos.vfxEffect.indicateL)
-    basic.pause(5)
+    basic.pause(600)
+    castleMode = "monitoring"
     while (!(monitorCenter)) {
         sayMode(false, true, false)
         basic.pause(20)
-        castleMode = "monitoring"
     }
     castleMode = "tripped"
-    basic.pause(5)
     notLegos.sayLights(notLegos.vfxRegion.SpotI, notLegos.vfxEffect.off)
-    basic.pause(5)
     monitorCenter = false
     stepOnH()
 }
@@ -208,6 +206,7 @@ function stepOnE () {
     notLegos.sayIndicate(notLegos.side.right, notLegos.hues.pink)
     notLegos.sayLights(notLegos.vfxRegion.SpotD, notLegos.vfxEffect.indicateL)
     notLegos.sayLights(notLegos.vfxRegion.SpotG, notLegos.vfxEffect.indicateR)
+    basic.pause(600)
     castleMode = "monitoring"
     while (!(monitorCenter || monitorLeft)) {
         sayMode(true, true, false)
@@ -226,22 +225,17 @@ function stepOnE () {
     }
 }
 function stepOnG () {
-    basic.pause(5)
     notLegos.sayLights(notLegos.vfxRegion.SpotG, notLegos.vfxEffect.active)
-    basic.pause(5)
     notLegos.sayIndicate(notLegos.side.right, notLegos.hues.green)
-    basic.pause(5)
     notLegos.sayLights(notLegos.vfxRegion.SpotI, notLegos.vfxEffect.indicateR)
-    basic.pause(5)
+    basic.pause(600)
+    castleMode = "monitoring"
     while (!(monitorRight)) {
         sayMode(false, false, true)
         basic.pause(20)
-        castleMode = "monitoring"
     }
     castleMode = "tripped"
-    basic.pause(5)
     notLegos.sayLights(notLegos.vfxRegion.SpotG, notLegos.vfxEffect.off)
-    basic.pause(5)
     monitorRight = false
     stepOnI()
 }
@@ -249,6 +243,7 @@ function stepOnC () {
     notLegos.sayLights(notLegos.vfxRegion.SpotC, notLegos.vfxEffect.active)
     notLegos.sayIndicate(notLegos.side.right, notLegos.hues.cyan)
     notLegos.sayLights(notLegos.vfxRegion.SpotE, notLegos.vfxEffect.indicateR)
+    basic.pause(600)
     castleMode = "monitoring"
     while (!(monitorLeft)) {
         sayMode(true, false, false)
@@ -274,23 +269,17 @@ function sayMode (left: boolean, center: boolean, right: boolean) {
     radioSay("D" + laserMode, 1)
 }
 function stepOnF () {
-    basic.pause(5)
     notLegos.sayLights(notLegos.vfxRegion.SpotF, notLegos.vfxEffect.active)
-    basic.pause(5)
     notLegos.sayIndicate(notLegos.side.left, notLegos.hues.cyan)
-    basic.pause(5)
     notLegos.sayLights(notLegos.vfxRegion.SpotH, notLegos.vfxEffect.indicateL)
-    basic.pause(5)
-    basic.pause(5)
+    basic.pause(600)
+    castleMode = "monitoring"
     while (!(monitorLeft)) {
         sayMode(true, false, false)
         basic.pause(20)
-        castleMode = "monitoring"
     }
     castleMode = "tripped"
-    basic.pause(5)
     notLegos.sayLights(notLegos.vfxRegion.SpotF, notLegos.vfxEffect.off)
-    basic.pause(5)
     monitorLeft = false
     stepOnH()
 }
@@ -441,22 +430,17 @@ function resetCastleDo () {
     monitorRight = false
 }
 function stepOnH () {
-    basic.pause(5)
     notLegos.sayLights(notLegos.vfxRegion.SpotH, notLegos.vfxEffect.active)
-    basic.pause(5)
     notLegos.sayIndicate(notLegos.side.right, notLegos.hues.green)
-    basic.pause(5)
     notLegos.sayLights(notLegos.vfxRegion.SpotI, notLegos.vfxEffect.indicateR)
-    basic.pause(5)
+    basic.pause(600)
+    castleMode = "monitoring"
     while (!(monitorCenter)) {
         sayMode(false, true, false)
         basic.pause(20)
-        castleMode = "monitoring"
     }
     castleMode = "tripped"
-    basic.pause(5)
     notLegos.sayLights(notLegos.vfxRegion.SpotH, notLegos.vfxEffect.off)
-    basic.pause(5)
     monitorCenter = false
     stepOnI()
 }
