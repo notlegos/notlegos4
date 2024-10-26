@@ -8,8 +8,9 @@ function stepOnD () {
     castleMode = "monitoring"
     while (!(monitorCenter || monitorRight)) {
         sayMode(false, true, true)
-        basic.pause(40)
+        basic.pause(10)
     }
+    notLegos.mp3sayPlay(notLegos.playerSaying.yay)
     castleMode = "tripped"
     notLegos.sayLights(notLegos.vfxRegion.SpotD, notLegos.vfxEffect.off)
     if (monitorCenter) {
@@ -40,8 +41,9 @@ function stepOnA () {
     castleMode = "monitoring"
     while (!(monitorLeft || monitorRight)) {
         sayMode(true, false, true)
-        basic.pause(40)
+        basic.pause(10)
     }
+    notLegos.mp3sayPlay(notLegos.playerSaying.yay)
     castleMode = "tripped"
     notLegos.sayLights(notLegos.vfxRegion.SpotA, notLegos.vfxEffect.off)
     if (monitorLeft) {
@@ -62,8 +64,9 @@ function stepOnB () {
     castleMode = "monitoring"
     while (!(monitorRight)) {
         sayMode(false, false, true)
-        basic.pause(40)
+        basic.pause(10)
     }
+    notLegos.mp3sayPlay(notLegos.playerSaying.yay)
     castleMode = "tripped"
     notLegos.sayLights(notLegos.vfxRegion.SpotB, notLegos.vfxEffect.off)
     monitorRight = false
@@ -179,8 +182,9 @@ function stepOnI () {
     castleMode = "monitoring"
     while (!(monitorCenter)) {
         sayMode(false, true, false)
-        basic.pause(40)
+        basic.pause(10)
     }
+    notLegos.mp3sayPlay(notLegos.playerSaying.yay)
     castleMode = "tripped"
     notLegos.sayLights(notLegos.vfxRegion.SpotI, notLegos.vfxEffect.off)
     monitorCenter = false
@@ -210,8 +214,9 @@ function stepOnE () {
     castleMode = "monitoring"
     while (!(monitorCenter || monitorLeft)) {
         sayMode(true, true, false)
-        basic.pause(40)
+        basic.pause(10)
     }
+    notLegos.mp3sayPlay(notLegos.playerSaying.yay)
     castleMode = "tripped"
     notLegos.sayLights(notLegos.vfxRegion.SpotE, notLegos.vfxEffect.off)
     if (monitorCenter) {
@@ -232,8 +237,9 @@ function stepOnG () {
     castleMode = "monitoring"
     while (!(monitorRight)) {
         sayMode(false, false, true)
-        basic.pause(40)
+        basic.pause(10)
     }
+    notLegos.mp3sayPlay(notLegos.playerSaying.yay)
     castleMode = "tripped"
     notLegos.sayLights(notLegos.vfxRegion.SpotG, notLegos.vfxEffect.off)
     monitorRight = false
@@ -247,8 +253,9 @@ function stepOnC () {
     castleMode = "monitoring"
     while (!(monitorLeft)) {
         sayMode(true, false, false)
-        basic.pause(40)
+        basic.pause(10)
     }
+    notLegos.mp3sayPlay(notLegos.playerSaying.yay)
     castleMode = "tripped"
     notLegos.sayLights(notLegos.vfxRegion.SpotC, notLegos.vfxEffect.off)
     monitorLeft = false
@@ -276,8 +283,9 @@ function stepOnF () {
     castleMode = "monitoring"
     while (!(monitorLeft)) {
         sayMode(true, false, false)
-        basic.pause(40)
+        basic.pause(10)
     }
+    notLegos.mp3sayPlay(notLegos.playerSaying.yay)
     castleMode = "tripped"
     notLegos.sayLights(notLegos.vfxRegion.SpotF, notLegos.vfxEffect.off)
     monitorLeft = false
@@ -437,8 +445,9 @@ function stepOnH () {
     castleMode = "monitoring"
     while (!(monitorCenter)) {
         sayMode(false, true, false)
-        basic.pause(40)
+        basic.pause(10)
     }
+    notLegos.mp3sayPlay(notLegos.playerSaying.yay)
     castleMode = "tripped"
     notLegos.sayLights(notLegos.vfxRegion.SpotH, notLegos.vfxEffect.off)
     monitorCenter = false
@@ -451,19 +460,20 @@ function runGame () {
     notLegos.sayMotor(notLegos.motors.door, notLegos.motorState.max)
     mineList = generateMinefields()
     notLegos.printLine(mineList[0], 5)
-    fogLow = true
+    fogLow = false
+    fogHigh = true
     pins.digitalWritePin(DigitalPin.P5, 1)
     notLegos.sayLights(notLegos.vfxRegion.CastleAll, notLegos.vfxEffect.off)
     notLegos.sayLights(notLegos.vfxRegion.WheelOuter, notLegos.vfxEffect.active)
     notLegos.sayLights(notLegos.vfxRegion.SpotA, notLegos.vfxEffect.mine)
     stepOnA()
 }
-let prevLaserR = 0
-let prevLaserL = 0
-let prevLaserC = 0
 let buttonRow = 0
 let iTook = 0
 let lastVolumeRead = 0
+let prevLaserR = 0
+let prevLaserL = 0
+let prevLaserC = 0
 let theLevel = 0
 let theScore = 0
 let mineList: string[] = []
@@ -533,6 +543,32 @@ if (isCastleSay) {
 let iBegan = input.runningTimeMicros()
 let isReady = true
 castleMode = "init"
+loops.everyInterval(10, function () {
+    if (!(isCastleSay)) {
+        prevLaserC = lastLaserC
+        prevLaserL = lastLaserL
+        prevLaserR = lastLaserR
+        lastLaserC = pins.analogReadPin(AnalogReadWritePin.P2)
+        lastLaserL = pins.analogReadPin(AnalogReadWritePin.P0)
+        lastLaserR = pins.analogReadPin(AnalogReadWritePin.P1)
+        if (monitorLeft && lastLaserL + prevLaserL <= 8) {
+            radioSay("BREAK", 1)
+            monitorLeft = false
+            monitorCenter = false
+            monitorRight = false
+        } else if (monitorCenter && lastLaserC + prevLaserC <= 8) {
+            radioSay("BREAK", 2)
+            monitorLeft = false
+            monitorCenter = false
+            monitorRight = false
+        } else if (monitorRight && lastLaserR + prevLaserR <= 8) {
+            radioSay("BREAK", 3)
+            monitorLeft = false
+            monitorCenter = false
+            monitorRight = false
+        }
+    }
+})
 loops.everyInterval(500, function () {
     if (isCastleSay) {
         lastWater = Math.round(pins.analogReadPin(AnalogReadWritePin.P2) / 30 - 0)
@@ -576,13 +612,6 @@ loops.everyInterval(500, function () {
             notLegos.sayMotor(notLegos.motors.shell, notLegos.motorState.max)
             notLegos.sayLights(notLegos.vfxRegion.SpotF, notLegos.vfxEffect.mine)
             notLegos.sayLights(notLegos.vfxRegion.BrickShell, notLegos.vfxEffect.mine)
-            basic.pause(notLegos.mp3durationSfxVoice() * 1000)
-            notLegos.mp3sayPlay(notLegos.playerSaying.ouch)
-            basic.pause(1500)
-            notLegos.sayMotor(notLegos.motors.shell, notLegos.motorState.min)
-            notLegos.sayLights(notLegos.vfxRegion.SpotAll, notLegos.vfxEffect.off)
-            notLegos.sayLights(notLegos.vfxRegion.BrickShell, notLegos.vfxEffect.off)
-            castleMode = "awaiting"
         }
     } else if (castleMode == "gotutorial") {
         castleMode = "tutorial"
@@ -615,28 +644,6 @@ loops.everyInterval(40, function () {
         lastSonarRead = notLegos.SonarNextRead()
     } else {
         notLegos.castleSayTick()
-        prevLaserC = lastLaserC
-        prevLaserL = lastLaserL
-        prevLaserR = lastLaserR
-        lastLaserC = pins.analogReadPin(AnalogReadWritePin.P2)
-        lastLaserL = pins.analogReadPin(AnalogReadWritePin.P0)
-        lastLaserR = pins.analogReadPin(AnalogReadWritePin.P1)
-        if (monitorLeft && lastLaserL + prevLaserL <= 10) {
-            radioSay("BREAK", 1)
-            monitorLeft = false
-            monitorCenter = false
-            monitorRight = false
-        } else if (monitorCenter && lastLaserC + prevLaserC <= 10) {
-            radioSay("BREAK", 2)
-            monitorLeft = false
-            monitorCenter = false
-            monitorRight = false
-        } else if (monitorRight && lastLaserR + prevLaserR <= 10) {
-            radioSay("BREAK", 3)
-            monitorLeft = false
-            monitorCenter = false
-            monitorRight = false
-        }
     }
     ready_oled()
     notLegos.changeThree()
