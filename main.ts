@@ -39,14 +39,17 @@ function radioSay (text5: string, val: number) {
 function stepOnA () {
     notLegos.sayIndicate(notLegos.side.left, notLegos.hues.yellow)
     notLegos.sayIndicate(notLegos.side.right, notLegos.hues.blue)
+    notLegos.setVolume(notLegos.mp3type.music, 80)
     while (lastSonarRead >= 10) {
         basic.pause(20)
     }
+    notLegos.mp3sayPlay(notLegos.playerSaying.ready)
+    notLegos.mp3musicPlay(notLegos.musicGenre.level)
     notLegos.sayLights(notLegos.vfxRegion.WheelOuter, notLegos.vfxEffect.off)
     notLegos.sayLights(notLegos.vfxRegion.SpotA, notLegos.vfxEffect.active)
     notLegos.sayLights(notLegos.vfxRegion.SpotB, notLegos.vfxEffect.indicateL)
     notLegos.sayLights(notLegos.vfxRegion.SpotC, notLegos.vfxEffect.indicateR)
-    basic.pause(1200)
+    basic.pause(1000)
     castleMode = "monitoring"
     while (!(monitorLeft || monitorRight)) {
         sayMode(true, false, true)
@@ -72,7 +75,7 @@ function stepOnB () {
         notLegos.sayLights(notLegos.vfxRegion.SpotB, notLegos.vfxEffect.mine)
         notLegos.sayMotor(notLegos.motors.redrack, notLegos.motorState.max)
         basic.pause(1000)
-        notLegos.sayMotor(notLegos.motors.redrack, notLegos.motorState.max)
+        notLegos.sayMotor(notLegos.motors.redrack, notLegos.motorState.min)
     } else {
         notLegos.sayLights(notLegos.vfxRegion.SpotB, notLegos.vfxEffect.active)
         notLegos.sayIndicate(notLegos.side.left, notLegos.hues.orange)
@@ -528,6 +531,8 @@ function runGame () {
     notLegos.sayLights(notLegos.vfxRegion.CastleAll, notLegos.vfxEffect.off)
     notLegos.sayLights(notLegos.vfxRegion.WheelOuter, notLegos.vfxEffect.active)
     notLegos.sayLights(notLegos.vfxRegion.SpotA, notLegos.vfxEffect.mine)
+    notLegos.setVolume(notLegos.mp3type.music, 80)
+    notLegos.mp3musicPlay(notLegos.musicGenre.level)
     stepOnA()
 }
 let buttonRow = 0
