@@ -1,26 +1,35 @@
 function stepOnD () {
-    notLegos.sayLights(notLegos.vfxRegion.SpotD, notLegos.vfxEffect.active)
-    notLegos.sayIndicate(notLegos.side.left, notLegos.hues.pink)
-    notLegos.sayIndicate(notLegos.side.right, notLegos.hues.cyan)
-    notLegos.sayLights(notLegos.vfxRegion.SpotF, notLegos.vfxEffect.indicateL)
-    notLegos.sayLights(notLegos.vfxRegion.SpotE, notLegos.vfxEffect.indicateR)
-    basic.pause(1200)
-    castleMode = "monitoring"
-    while (!(monitorCenter || monitorRight)) {
-        sayMode(false, true, true)
-        basic.pause(10)
-    }
-    notLegos.mp3sayPlay(notLegos.playerSaying.yay)
-    castleMode = "tripped"
-    notLegos.sayLights(notLegos.vfxRegion.SpotD, notLegos.vfxEffect.off)
-    if (monitorCenter) {
-        notLegos.sayLights(notLegos.vfxRegion.SpotF, notLegos.vfxEffect.off)
-        monitorCenter = false
-        stepOnE()
+    if (isMine(theLevel, "D")) {
+        notLegos.mp3sfxPlay(notLegos.sfxType.explosion)
+        notLegos.mp3sayPlay(notLegos.playerSaying.ouch)
+        notLegos.sayLights(notLegos.vfxRegion.SpotD, notLegos.vfxEffect.mine)
+        notLegos.sayMotor(notLegos.motors.cannon, notLegos.motorState.max)
+        basic.pause(1000)
+        notLegos.sayMotor(notLegos.motors.cannon, notLegos.motorState.min)
     } else {
-        notLegos.sayLights(notLegos.vfxRegion.SpotE, notLegos.vfxEffect.off)
-        monitorRight = false
-        stepOnF()
+        notLegos.sayLights(notLegos.vfxRegion.SpotD, notLegos.vfxEffect.active)
+        notLegos.sayIndicate(notLegos.side.left, notLegos.hues.pink)
+        notLegos.sayIndicate(notLegos.side.right, notLegos.hues.cyan)
+        notLegos.sayLights(notLegos.vfxRegion.SpotF, notLegos.vfxEffect.indicateL)
+        notLegos.sayLights(notLegos.vfxRegion.SpotE, notLegos.vfxEffect.indicateR)
+        basic.pause(1200)
+        castleMode = "monitoring"
+        while (!(monitorCenter || monitorRight)) {
+            sayMode(false, true, true)
+            basic.pause(10)
+        }
+        notLegos.mp3sayPlay(notLegos.playerSaying.yay)
+        castleMode = "tripped"
+        notLegos.sayLights(notLegos.vfxRegion.SpotD, notLegos.vfxEffect.off)
+        if (monitorCenter) {
+            notLegos.sayLights(notLegos.vfxRegion.SpotF, notLegos.vfxEffect.off)
+            monitorCenter = false
+            stepOnE()
+        } else {
+            notLegos.sayLights(notLegos.vfxRegion.SpotE, notLegos.vfxEffect.off)
+            monitorRight = false
+            stepOnF()
+        }
     }
 }
 function radioSay (text5: string, val: number) {
@@ -57,20 +66,29 @@ function stepOnA () {
     }
 }
 function stepOnB () {
-    notLegos.sayLights(notLegos.vfxRegion.SpotB, notLegos.vfxEffect.active)
-    notLegos.sayIndicate(notLegos.side.left, notLegos.hues.orange)
-    notLegos.sayLights(notLegos.vfxRegion.SpotD, notLegos.vfxEffect.indicateL)
-    basic.pause(1200)
-    castleMode = "monitoring"
-    while (!(monitorRight)) {
-        sayMode(false, false, true)
-        basic.pause(10)
+    if (isMine(theLevel, "B")) {
+        notLegos.mp3sfxPlay(notLegos.sfxType.slash)
+        notLegos.mp3sayPlay(notLegos.playerSaying.ouch)
+        notLegos.sayLights(notLegos.vfxRegion.SpotB, notLegos.vfxEffect.mine)
+        notLegos.sayMotor(notLegos.motors.redrack, notLegos.motorState.max)
+        basic.pause(1000)
+        notLegos.sayMotor(notLegos.motors.redrack, notLegos.motorState.max)
+    } else {
+        notLegos.sayLights(notLegos.vfxRegion.SpotB, notLegos.vfxEffect.active)
+        notLegos.sayIndicate(notLegos.side.left, notLegos.hues.orange)
+        notLegos.sayLights(notLegos.vfxRegion.SpotD, notLegos.vfxEffect.indicateL)
+        basic.pause(1200)
+        castleMode = "monitoring"
+        while (!(monitorRight)) {
+            sayMode(false, false, true)
+            basic.pause(10)
+        }
+        notLegos.mp3sayPlay(notLegos.playerSaying.yay)
+        castleMode = "tripped"
+        notLegos.sayLights(notLegos.vfxRegion.SpotB, notLegos.vfxEffect.off)
+        monitorRight = false
+        stepOnD()
     }
-    notLegos.mp3sayPlay(notLegos.playerSaying.yay)
-    castleMode = "tripped"
-    notLegos.sayLights(notLegos.vfxRegion.SpotB, notLegos.vfxEffect.off)
-    monitorRight = false
-    stepOnD()
 }
 function runWelcome () {
     notLegos.setVolume(notLegos.mp3type.music, 100)
@@ -175,20 +193,24 @@ function runTutorial () {
     castleMode = "awaiting"
 }
 function stepOnI () {
-    notLegos.sayLights(notLegos.vfxRegion.SpotI, notLegos.vfxEffect.active)
-    notLegos.sayIndicate(notLegos.side.left, notLegos.hues.cyan)
-    notLegos.sayLights(notLegos.vfxRegion.SpotH, notLegos.vfxEffect.indicateL)
-    basic.pause(1200)
-    castleMode = "monitoring"
-    while (!(monitorCenter)) {
-        sayMode(false, true, false)
-        basic.pause(10)
+    if (true) {
+    	
+    } else {
+        notLegos.sayLights(notLegos.vfxRegion.SpotI, notLegos.vfxEffect.active)
+        notLegos.sayIndicate(notLegos.side.left, notLegos.hues.cyan)
+        notLegos.sayLights(notLegos.vfxRegion.SpotH, notLegos.vfxEffect.indicateL)
+        basic.pause(1200)
+        castleMode = "monitoring"
+        while (!(monitorCenter)) {
+            sayMode(false, true, false)
+            basic.pause(10)
+        }
+        notLegos.mp3sayPlay(notLegos.playerSaying.yay)
+        castleMode = "tripped"
+        notLegos.sayLights(notLegos.vfxRegion.SpotI, notLegos.vfxEffect.off)
+        monitorCenter = false
+        stepOnH()
     }
-    notLegos.mp3sayPlay(notLegos.playerSaying.yay)
-    castleMode = "tripped"
-    notLegos.sayLights(notLegos.vfxRegion.SpotI, notLegos.vfxEffect.off)
-    monitorCenter = false
-    stepOnH()
 }
 function sayReset () {
     radioSay("RESET", 1)
@@ -205,61 +227,88 @@ function generateMinefields () {
     return listOut2
 }
 function stepOnE () {
-    notLegos.sayLights(notLegos.vfxRegion.SpotE, notLegos.vfxEffect.active)
-    notLegos.sayIndicate(notLegos.side.left, notLegos.hues.orange)
-    notLegos.sayIndicate(notLegos.side.right, notLegos.hues.pink)
-    notLegos.sayLights(notLegos.vfxRegion.SpotD, notLegos.vfxEffect.indicateL)
-    notLegos.sayLights(notLegos.vfxRegion.SpotG, notLegos.vfxEffect.indicateR)
-    basic.pause(1200)
-    castleMode = "monitoring"
-    while (!(monitorCenter || monitorLeft)) {
-        sayMode(true, true, false)
-        basic.pause(10)
-    }
-    notLegos.mp3sayPlay(notLegos.playerSaying.yay)
-    castleMode = "tripped"
-    notLegos.sayLights(notLegos.vfxRegion.SpotE, notLegos.vfxEffect.off)
-    if (monitorCenter) {
-        notLegos.sayLights(notLegos.vfxRegion.SpotG, notLegos.vfxEffect.off)
-        monitorCenter = false
-        stepOnD()
+    if (isMine(theLevel, "E")) {
+        notLegos.mp3sfxPlay(notLegos.sfxType.explosion)
+        notLegos.mp3sayPlay(notLegos.playerSaying.ouch)
+        notLegos.sayLights(notLegos.vfxRegion.SpotE, notLegos.vfxEffect.mine)
+        notLegos.sayMotor(notLegos.motors.shark, notLegos.motorState.max)
+        basic.pause(1000)
+        notLegos.sayMotor(notLegos.motors.shark, notLegos.motorState.min)
     } else {
-        notLegos.sayLights(notLegos.vfxRegion.SpotD, notLegos.vfxEffect.off)
-        monitorLeft = false
-        stepOnG()
+        notLegos.sayLights(notLegos.vfxRegion.SpotE, notLegos.vfxEffect.active)
+        notLegos.sayIndicate(notLegos.side.left, notLegos.hues.orange)
+        notLegos.sayIndicate(notLegos.side.right, notLegos.hues.pink)
+        notLegos.sayLights(notLegos.vfxRegion.SpotD, notLegos.vfxEffect.indicateL)
+        notLegos.sayLights(notLegos.vfxRegion.SpotG, notLegos.vfxEffect.indicateR)
+        basic.pause(1200)
+        castleMode = "monitoring"
+        while (!(monitorCenter || monitorLeft)) {
+            sayMode(true, true, false)
+            basic.pause(10)
+        }
+        notLegos.mp3sayPlay(notLegos.playerSaying.yay)
+        castleMode = "tripped"
+        notLegos.sayLights(notLegos.vfxRegion.SpotE, notLegos.vfxEffect.off)
+        if (monitorCenter) {
+            notLegos.sayLights(notLegos.vfxRegion.SpotG, notLegos.vfxEffect.off)
+            monitorCenter = false
+            stepOnD()
+        } else {
+            notLegos.sayLights(notLegos.vfxRegion.SpotD, notLegos.vfxEffect.off)
+            monitorLeft = false
+            stepOnG()
+        }
     }
 }
 function stepOnG () {
-    notLegos.sayLights(notLegos.vfxRegion.SpotG, notLegos.vfxEffect.active)
-    notLegos.sayIndicate(notLegos.side.right, notLegos.hues.green)
-    notLegos.sayLights(notLegos.vfxRegion.SpotI, notLegos.vfxEffect.indicateR)
-    basic.pause(1200)
-    castleMode = "monitoring"
-    while (!(monitorRight)) {
-        sayMode(false, false, true)
-        basic.pause(10)
+    if (isMine(theLevel, "G")) {
+        notLegos.mp3sfxPlay(notLegos.sfxType.ghost)
+        notLegos.mp3sayPlay(notLegos.playerSaying.nay)
+        notLegos.sayLights(notLegos.vfxRegion.SpotG, notLegos.vfxEffect.mine)
+        notLegos.sayMotor(notLegos.motors.ghost, notLegos.motorState.max)
+        basic.pause(1000)
+        notLegos.sayMotor(notLegos.motors.ghost, notLegos.motorState.min)
+    } else {
+        notLegos.sayLights(notLegos.vfxRegion.SpotG, notLegos.vfxEffect.active)
+        notLegos.sayIndicate(notLegos.side.right, notLegos.hues.green)
+        notLegos.sayLights(notLegos.vfxRegion.SpotI, notLegos.vfxEffect.indicateR)
+        basic.pause(1200)
+        castleMode = "monitoring"
+        while (!(monitorRight)) {
+            sayMode(false, false, true)
+            basic.pause(10)
+        }
+        notLegos.mp3sayPlay(notLegos.playerSaying.yay)
+        castleMode = "tripped"
+        notLegos.sayLights(notLegos.vfxRegion.SpotG, notLegos.vfxEffect.off)
+        monitorRight = false
+        stepOnI()
     }
-    notLegos.mp3sayPlay(notLegos.playerSaying.yay)
-    castleMode = "tripped"
-    notLegos.sayLights(notLegos.vfxRegion.SpotG, notLegos.vfxEffect.off)
-    monitorRight = false
-    stepOnI()
 }
 function stepOnC () {
-    notLegos.sayLights(notLegos.vfxRegion.SpotC, notLegos.vfxEffect.active)
-    notLegos.sayIndicate(notLegos.side.right, notLegos.hues.cyan)
-    notLegos.sayLights(notLegos.vfxRegion.SpotE, notLegos.vfxEffect.indicateR)
-    basic.pause(1200)
-    castleMode = "monitoring"
-    while (!(monitorLeft)) {
-        sayMode(true, false, false)
-        basic.pause(10)
+    if (isMine(theLevel, "C")) {
+        notLegos.mp3sfxPlay(notLegos.sfxType.splash)
+        notLegos.mp3sayPlay(notLegos.playerSaying.ouch)
+        notLegos.sayLights(notLegos.vfxRegion.SpotC, notLegos.vfxEffect.mine)
+        notLegos.sayMotor(notLegos.motors.shark, notLegos.motorState.max)
+        basic.pause(1000)
+        notLegos.sayMotor(notLegos.motors.shark, notLegos.motorState.min)
+    } else {
+        notLegos.sayLights(notLegos.vfxRegion.SpotC, notLegos.vfxEffect.active)
+        notLegos.sayIndicate(notLegos.side.right, notLegos.hues.cyan)
+        notLegos.sayLights(notLegos.vfxRegion.SpotE, notLegos.vfxEffect.indicateR)
+        basic.pause(1200)
+        castleMode = "monitoring"
+        while (!(monitorLeft)) {
+            sayMode(true, false, false)
+            basic.pause(10)
+        }
+        notLegos.mp3sayPlay(notLegos.playerSaying.yay)
+        castleMode = "tripped"
+        notLegos.sayLights(notLegos.vfxRegion.SpotC, notLegos.vfxEffect.off)
+        monitorLeft = false
+        stepOnE()
     }
-    notLegos.mp3sayPlay(notLegos.playerSaying.yay)
-    castleMode = "tripped"
-    notLegos.sayLights(notLegos.vfxRegion.SpotC, notLegos.vfxEffect.off)
-    monitorLeft = false
-    stepOnE()
 }
 function sayMode (left: boolean, center: boolean, right: boolean) {
     if (left) {
@@ -276,20 +325,29 @@ function sayMode (left: boolean, center: boolean, right: boolean) {
     radioSay("D" + laserMode, 1)
 }
 function stepOnF () {
-    notLegos.sayLights(notLegos.vfxRegion.SpotF, notLegos.vfxEffect.active)
-    notLegos.sayIndicate(notLegos.side.left, notLegos.hues.cyan)
-    notLegos.sayLights(notLegos.vfxRegion.SpotH, notLegos.vfxEffect.indicateL)
-    basic.pause(1200)
-    castleMode = "monitoring"
-    while (!(monitorLeft)) {
-        sayMode(true, false, false)
-        basic.pause(10)
+    if (isMine(theLevel, "F")) {
+        notLegos.mp3sfxPlay(notLegos.sfxType.slash)
+        notLegos.mp3sayPlay(notLegos.playerSaying.ouch)
+        notLegos.sayLights(notLegos.vfxRegion.SpotF, notLegos.vfxEffect.mine)
+        notLegos.sayMotor(notLegos.motors.shell, notLegos.motorState.max)
+        basic.pause(1000)
+        notLegos.sayMotor(notLegos.motors.shell, notLegos.motorState.min)
+    } else {
+        notLegos.sayLights(notLegos.vfxRegion.SpotF, notLegos.vfxEffect.active)
+        notLegos.sayIndicate(notLegos.side.left, notLegos.hues.cyan)
+        notLegos.sayLights(notLegos.vfxRegion.SpotH, notLegos.vfxEffect.indicateL)
+        basic.pause(1200)
+        castleMode = "monitoring"
+        while (!(monitorLeft)) {
+            sayMode(true, false, false)
+            basic.pause(10)
+        }
+        notLegos.mp3sayPlay(notLegos.playerSaying.yay)
+        castleMode = "tripped"
+        notLegos.sayLights(notLegos.vfxRegion.SpotF, notLegos.vfxEffect.off)
+        monitorLeft = false
+        stepOnH()
     }
-    notLegos.mp3sayPlay(notLegos.playerSaying.yay)
-    castleMode = "tripped"
-    notLegos.sayLights(notLegos.vfxRegion.SpotF, notLegos.vfxEffect.off)
-    monitorLeft = false
-    stepOnH()
 }
 function ready_oled () {
     if (isCastleSay) {
@@ -438,20 +496,24 @@ function resetCastleDo () {
     monitorRight = false
 }
 function stepOnH () {
-    notLegos.sayLights(notLegos.vfxRegion.SpotH, notLegos.vfxEffect.active)
-    notLegos.sayIndicate(notLegos.side.right, notLegos.hues.green)
-    notLegos.sayLights(notLegos.vfxRegion.SpotI, notLegos.vfxEffect.indicateR)
-    basic.pause(1200)
-    castleMode = "monitoring"
-    while (!(monitorCenter)) {
-        sayMode(false, true, false)
-        basic.pause(10)
+    if (true) {
+    	
+    } else {
+        notLegos.sayLights(notLegos.vfxRegion.SpotH, notLegos.vfxEffect.active)
+        notLegos.sayIndicate(notLegos.side.right, notLegos.hues.green)
+        notLegos.sayLights(notLegos.vfxRegion.SpotI, notLegos.vfxEffect.indicateR)
+        basic.pause(1200)
+        castleMode = "monitoring"
+        while (!(monitorCenter)) {
+            sayMode(false, true, false)
+            basic.pause(10)
+        }
+        notLegos.mp3sayPlay(notLegos.playerSaying.yay)
+        castleMode = "tripped"
+        notLegos.sayLights(notLegos.vfxRegion.SpotH, notLegos.vfxEffect.off)
+        monitorCenter = false
+        stepOnI()
     }
-    notLegos.mp3sayPlay(notLegos.playerSaying.yay)
-    castleMode = "tripped"
-    notLegos.sayLights(notLegos.vfxRegion.SpotH, notLegos.vfxEffect.off)
-    monitorCenter = false
-    stepOnI()
 }
 function runGame () {
     castleMode = "play"
@@ -474,7 +536,6 @@ let lastVolumeRead = 0
 let prevLaserR = 0
 let prevLaserL = 0
 let prevLaserC = 0
-let theLevel = 0
 let theScore = 0
 let mineList: string[] = []
 let theMines = ""
@@ -493,6 +554,7 @@ let monitorLeft = false
 let btToken = ""
 let monitorRight = false
 let monitorCenter = false
+let theLevel = 0
 let castleMode = ""
 let digits: notLegos.TM1637LEDs = null
 let isCastleSay = false
