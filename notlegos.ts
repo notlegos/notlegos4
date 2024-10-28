@@ -11,7 +11,7 @@ namespace notLegos {
     //% block="say lights %light show %effect"
     export function sayLights(light: vfxRegion, effect: vfxEffect) {
         radioSay("L" + light, effect)
-        basic.pause(15)
+        basic.pause(20)
     }
 
     //% blockId=NL_Radio_SayMotor
@@ -19,7 +19,7 @@ namespace notLegos {
     //% block="say motor %motor set %setting"
     export function sayMotor(motor: motors, setting: motorState) {
         radioSay("M" + motor, setting)
-        basic.pause(15)
+        basic.pause(20)
     }
 
     export enum side {left=0, right=1}
@@ -28,6 +28,7 @@ namespace notLegos {
     //% block="say indicate %theSide color to %theColor"
     export function sayIndicate(theSide: side, theColor: hues) {
         radioSay("I" + theSide, theColor)
+        basic.pause(20)
     }
     
 /// END RADIO ///
@@ -620,7 +621,7 @@ namespace notLegos {
         dataArr[5] = 0
         dataArr[6] = Math.round(vol / 100 * masterVolume)
         mp3_checkSum()
-        mp3_sendDataFast()
+        mp3_sendData()
     }
 
     //% blockId=NL_MP3_GetVolumes
