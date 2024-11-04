@@ -201,6 +201,9 @@ namespace notLegos {
                 vfx_mine_sat[index] = 100
                 vfx_mine_lum[index] = 50
             }
+        } else if (effect == vfxEffect.glow) {
+            vfx_parade_lum[0]=10
+            vfx_parade_tog[0]=0
         } else if (effect == vfxEffect.indicateR) {
             for (let index = 0; index < 2; index++) {
                 vfx_indicate_tog[index] = 0
@@ -208,6 +211,7 @@ namespace notLegos {
                 vfx_indicate_lum[index] = 50
             }
         }
+        
     }
 
     //% blockId=NL_PIXEL_IndicateLColorShim
@@ -371,7 +375,7 @@ namespace notLegos {
         else if (effect == vfxEffect.yellow) { return 18 }
         else if (effect == vfxEffect.orange) { return 19 }
         else if (effect == vfxEffect.red) { return 0 }
-        return pixelParade;
+        return pixelParade; //glow
     }
 
     //% blockId=NL_PIXEL_SetEffectShim
@@ -409,16 +413,35 @@ namespace notLegos {
             for (let i = 0; i < 4; i++) {paletteKong[i] = getPixel(effect)}
             for (let i = 0; i < 18; i++) {paletteSock[i] = getPixel(effect)} 
             for (let i = 0; i < 20; i++) {paletteWheel[i] = getPixel(effect)}
-        } else if (region == vfxRegion.SpotA) {for (let i = 8; i <= 11; i++) {paletteStrip[i] = getPixel(effect)}} 
-        else if (region == vfxRegion.SpotB) {for (let i = 6; i <= 7; i++) {paletteStrip[i] = getPixel(effect)}} 
-        else if (region == vfxRegion.SpotC) {for (let i = 12; i <= 13; i++) {paletteStrip[i] = getPixel(effect)}} 
-        else if (region == vfxRegion.SpotD) {for (let i = 4; i <= 5; i++) {paletteStrip[i] = getPixel(effect)}} 
-        else if (region == vfxRegion.SpotE) {for (let i = 14; i <= 15; i++) {paletteStrip[i] = getPixel(effect)}} 
-        else if (region == vfxRegion.SpotF) {for (let i = 2; i <= 3; i++) {paletteStrip[i] = getPixel(effect)}} 
-        else if (region == vfxRegion.SpotG) {for (let i = 16; i <= 17; i++) {paletteStrip[i] = getPixel(effect)}} 
-        else if (region == vfxRegion.SpotH) {for (let i = 0; i <= 1; i++) {paletteStrip[i] = getPixel(effect)}} 
-        else if (region == vfxRegion.SpotI) {for (let i = 18; i <= 19; i++) {paletteStrip[i] = getPixel(effect)}} 
-        else if (region == vfxRegion.SpotAll) {for (let i = 0; i < 20; i++) {paletteStrip[i] = getPixel(effect)}} 
+        } else if (region == vfxRegion.SpotA) {
+            for (let i = 8; i <= 11; i++) {paletteStrip[i] = getPixel(effect)}
+            if (effect==vfxEffect.indicateL){setIndicateL(hues.green)}
+            else if (effect==vfxEffect.indicateR){setIndicateR(hues.green)}
+        } else if (region == vfxRegion.SpotB) {
+            if (effect == vfxEffect.indicateL) { setIndicateL(hues.yellow) }
+            for (let i = 6; i <= 7; i++) {paletteStrip[i] = getPixel(effect)}
+        } else if (region == vfxRegion.SpotC) {
+            if (effect == vfxEffect.indicateR) { setIndicateR(hues.blue) }
+            for (let i = 12; i <= 13; i++) {paletteStrip[i] = getPixel(effect)}
+        } else if (region == vfxRegion.SpotD) {
+            if (effect == vfxEffect.indicateL) { setIndicateL(hues.orange) }
+            for (let i = 4; i <= 5; i++) {paletteStrip[i] = getPixel(effect)}
+        } else if (region == vfxRegion.SpotE) {
+            if (effect == vfxEffect.indicateR) { setIndicateR(hues.lime) }
+            for (let i = 14; i <= 15; i++) {paletteStrip[i] = getPixel(effect)}
+        } else if (region == vfxRegion.SpotF) {
+            if (effect == vfxEffect.indicateL) { setIndicateL(hues.purple) }
+            for (let i = 2; i <= 3; i++) {paletteStrip[i] = getPixel(effect)}
+        } else if (region == vfxRegion.SpotG) {
+            if (effect == vfxEffect.indicateR) { setIndicateR(hues.pink) }
+            for (let i = 16; i <= 17; i++) {paletteStrip[i] = getPixel(effect)}
+        } else if (region == vfxRegion.SpotH) {
+            if (effect == vfxEffect.indicateL) { setIndicateL(hues.cyan) }
+            for (let i = 0; i <= 1; i++) {paletteStrip[i] = getPixel(effect)}
+        } else if (region == vfxRegion.SpotI) {
+            if (effect == vfxEffect.indicateR) { setIndicateR(hues.cyan) }
+            for (let i = 18; i <= 19; i++) {paletteStrip[i] = getPixel(effect)}
+        } else if (region == vfxRegion.SpotAll) {for (let i = 0; i < 20; i++) {paletteStrip[i] = getPixel(effect)}} 
         else if (region == vfxRegion.BrickWheel) {
             paletteBricks[0] = getPixel(effect)
             paletteBricks[7] = getPixel(effect)
@@ -426,6 +449,7 @@ namespace notLegos {
         else if (region == vfxRegion.BrickShell) {paletteBricks[6] = getPixel(effect)} 
         else if (region == vfxRegion.BrickGhost) {paletteBricks[4] = getPixel(effect)} 
         else if (region == vfxRegion.BrickDragon) {
+            if (effect == vfxEffect.indicateL) { setIndicateL(hues.yellow) }
             paletteBricks[2] = getPixel(effect)
             paletteBricks[3] = getPixel(effect)
         } else if (region == vfxRegion.BrickCannon) {paletteBricks[1] = getPixel(effect)} 
@@ -433,6 +457,19 @@ namespace notLegos {
         else if (region == vfxRegion.KongFront) {for (let i = 0; i < 2; i++) {paletteKong[i] = getPixel(effect)}} 
         else if (region == vfxRegion.KongBack) {for (let i = 2; i < 4; i++) {paletteKong[i] = getPixel(effect)}} 
         else if (region == vfxRegion.KongAll) {for (let i = 0; i < 4; i++) {paletteKong[i] = getPixel(effect)}}
+        else if (region == vfxRegion.Station2) {
+            if (effect == vfxEffect.indicateR) { setIndicateR(hues.cyan) }
+            for (let i = 12; i <= 13; i++) { paletteStrip[i] = getPixel(effect) }
+            for (let i = 14; i <= 15; i++) { paletteStrip[i] = getPixel(effect) }
+        }
+        else if (region == vfxRegion.KyleL) {
+            if (effect == vfxEffect.indicateL) { setIndicateL(hues.cyan) }
+            for (let i = 0; i <= 5; i++) { paletteStrip[i] = getPixel(effect) }  //D,F,H
+        }
+        else if (region == vfxRegion.KyleR) {
+            if (effect == vfxEffect.indicateR) { setIndicateR(hues.cyan) }
+            for (let i = 14; i <= 19; i++) { paletteStrip[i] = getPixel(effect) }  //E,G,I
+        }
     }
 
     export enum vfxRegion{
@@ -442,6 +479,7 @@ namespace notLegos {
         KongFront=16, KongBack=17, KongAll=18,
         BrickWheel=19, BrickBomb=20, BrickShell=21, BrickGhost=22, BrickDragon=23, BrickCannon=24, BrickAll=25,
         SpotA=26, SpotB=27, SpotC=28, SpotD=29, SpotE=30, SpotF=31, SpotG=32, SpotH=33, SpotI=34, SpotAll=35,
+        KyleL=36,KyleR=37,Station2=38,
         CastleAll=0
     }
 
