@@ -259,11 +259,11 @@ function runWelcome () {
 function buttonPress (button: string) {
     notLegos.printLine("button: " + button, 6)
     if (button == "e") {
-        runWelcome()
+        won()
     } else if (button == "d") {
-        runTutorial()
+        lost()
     } else {
-        runGame()
+        runTutorial()
     }
 }
 function won () {
@@ -288,7 +288,7 @@ function won () {
     fogHigh = false
     basic.pause(1000)
     pins.digitalWritePin(DigitalPin.P1, 0)
-    basic.pause(6000)
+    basic.pause(4000)
     pins.digitalWritePin(DigitalPin.P1, 1)
     basic.pause(2000)
     notLegos.sayMotor(notLegos.motors.swing, notLegos.motorState.off)
