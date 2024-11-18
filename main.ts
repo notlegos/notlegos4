@@ -269,6 +269,7 @@ function buttonPress (button: string) {
 function won () {
     castleMode = "won"
     pins.digitalWritePin(DigitalPin.P5, 0)
+    notLegos.sayFireMode(false)
     notLegos.mp3sayPlay(notLegos.playerSaying.won)
     notLegos.sayLights(notLegos.vfxRegion.CastleAll, notLegos.vfxEffect.parade)
     fogLow = true
@@ -282,17 +283,16 @@ function won () {
     notLegos.sayMotor(notLegos.motors.wheel, notLegos.motorState.max)
     basic.pause(3000)
     notLegos.sayMotor(notLegos.motors.swing, notLegos.motorState.max)
-    basic.pause(2000)
-    fogBlow = false
-    fogLow = false
-    fogHigh = false
-    basic.pause(1000)
+    basic.pause(3000)
     pins.digitalWritePin(DigitalPin.P1, 0)
-    basic.pause(4000)
+    basic.pause(8000)
     pins.digitalWritePin(DigitalPin.P1, 1)
     basic.pause(2000)
     notLegos.sayMotor(notLegos.motors.swing, notLegos.motorState.off)
     basic.pause(2000)
+    fogBlow = false
+    fogLow = false
+    fogHigh = false
     notLegos.sayMotor(notLegos.motors.wheel, notLegos.motorState.off)
     notLegos.setVolume(notLegos.mp3type.music, 50)
     basic.pause(2000)
@@ -542,7 +542,9 @@ function stepOnG () {
             sayMode(false, false, true)
             basic.pause(60)
         }
-        notLegos.mp3sayPlay(notLegos.playerSaying.yay)
+        for (let index = 0; index < 0; index++) {
+            notLegos.mp3sayPlay(notLegos.playerSaying.yay)
+        }
         castleMode = "tripped"
         notLegos.sayLights(notLegos.vfxRegion.SpotG, notLegos.vfxEffect.off)
         monitorRight = false
@@ -646,7 +648,9 @@ function stepOnF () {
             sayMode(true, false, false)
             basic.pause(60)
         }
-        notLegos.mp3sayPlay(notLegos.playerSaying.yay)
+        for (let index = 0; index < 0; index++) {
+            notLegos.mp3sayPlay(notLegos.playerSaying.yay)
+        }
         castleMode = "tripped"
         notLegos.sayLights(notLegos.vfxRegion.SpotF, notLegos.vfxEffect.off)
         monitorLeft = false
@@ -662,7 +666,9 @@ function magicianSays (startLeft: boolean) {
         notLegos.sayLights(notLegos.vfxRegion.KyleR, notLegos.vfxEffect.active)
     }
     mineLeft = !(isMine(theLevel, "H"))
-    basic.pause(notLegos.mp3durationSfxVoice() * 1000 + 0)
+    for (let index = 0; index < 0; index++) {
+        basic.pause(notLegos.mp3durationSfxVoice() * 1000 + 0)
+    }
     notLegos.setVolume(notLegos.mp3type.music, 20)
     if (hitMineH || hitMineI) {
         notLegos.mp3magicianAgain()
@@ -1271,9 +1277,6 @@ loops.everyInterval(500, function () {
     } else {
         notLegos.printLine("//Castle Do// " + iTook, 0)
     }
-})
-loops.everyInterval(500, function () {
-	
 })
 loops.everyInterval(500, function () {
     if (castleMode == "goplay") {
